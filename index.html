@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Кто я? ✦</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #07070e;
+    --bg2: #10101b;
+    --card: rgba(20, 19, 35, 0.82);
+    --text: #f8f6ff;
+    --muted: #aaa6b8;
+    --soft: #777286;
+    --line: rgba(255,255,255,.10);
+    --pink: #ff69ad;
+    --purple: #8877ff;
+    --blue: #69b7ff;
+    --green: #69e0ae;
+    --shadow: rgba(0,0,0,.55);
+}
+
+body.light {
+    --bg: #f3f0f8;
+    --bg2: #ffffff;
+    --card: rgba(255,255,255,.82);
+    --text: #17151e;
+    --muted: #65606f;
+    --soft: #918b9c;
+    --line: rgba(30,20,50,.10);
+    --shadow: rgba(50,35,80,.18);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(136,119,255,.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(255,105,173,.17),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(105,183,255,.10),
+            transparent 35%
+        ),
+        var(--bg);
+
+    overflow-x: hidden;
+    transition: background .5s, color .5s;
+}
+
+/* звёздный фон */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.75) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,.35) 1px, transparent 1px);
+
+    background-size: 70px 70px, 110px 110px;
+    background-position: 0 0, 35px 50px;
+
+    opacity: .18;
+    animation: stars 35s linear infinite;
+}
+
+@keyframes stars {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(70px);
+    }
+}
+
+/* плавающие свечения */
+
+.orb {
+    position: fixed;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: -4;
+    opacity: .18;
+}
+
+.orb.one {
+    background: var(--pink);
+    top: -80px;
+    left: -70px;
+    animation: orb1 9s ease-in-out infinite alternate;
+}
+
+.orb.two {
+    background: var(--purple);
+    right: -90px;
+    top: 35%;
+    animation: orb2 11s ease-in-out infinite alternate;
+}
+
+.orb.three {
+    background: var(--blue);
+    bottom: -100px;
+    left: 35%;
+    animation: orb3 12s ease-in-out infinite alternate;
+}
+
+@keyframes orb1 {
+    to {
+        transform: translate(90px, 80px) scale(1.2);
+    }
+}
+
+@keyframes orb2 {
+    to {
+        transform: translate(-100px, -70px) scale(1.3);
+    }
+}
+
+@keyframes orb3 {
+    to {
+        transform: translate(80px, -80px) scale(1.15);
+    }
+}
+
+/* верхняя панель */
+
+.topbar {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 50;
+}
+
+.theme-button {
+    width: 46px;
+    height: 46px;
+
+    border-radius: 50%;
+    border: 1px solid var(--line);
+
+    background: var(--card);
+    color: var(--text);
+
+    backdrop-filter: blur(15px);
+
+    cursor: pointer;
+    font-size: 20px;
+
+    transition: .25s;
+}
+
+.theme-button:hover {
+    transform: rotate(15deg) scale(1.08);
+}
+
+/* контейнер */
+
+.wrapper {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px 15px;
+}
+
+/* карточка */
+
+.card {
+    width: min(700px, 100%);
+
+    position: relative;
+
+    padding: 36px;
+
+    border-radius: 32px;
+
+    background: var(--card);
+
+    border: 1px solid var(--line);
+
+    backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 35px 100px var(--shadow),
+        inset 0 1px rgba(255,255,255,.04);
+
+    overflow: hidden;
+}
+
+/* декоративный свет */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    right: -160px;
+    top: -170px;
+
+    border-radius: 50%;
+
+    background: rgba(255,105,173,.18);
+
+    filter: blur(70px);
+
+    pointer-events: none;
+}
+
+/* экраны */
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+    animation: screenIn .55s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes screenIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* маленький бейдж */
+
+.badge {
+    display: inline-flex;
+
+    padding: 8px 13px;
+
+    border-radius: 100px;
+
+    background: rgba(255,255,255,.07);
+
+    border: 1px solid var(--line);
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    letter-spacing: .14em;
+
+    text-transform: uppercase;
+}
+
+/* заголовки */
+
+h1 {
+    margin: 23px 0 15px;
+
+    font-size: clamp(45px, 9vw, 76px);
+
+    line-height: .91;
+
+    letter-spacing: -.06em;
+}
+
+h2 {
+    margin: 20px 0 25px;
+
+    font-size: clamp(26px, 5vw, 40px);
+
+    line-height: 1.08;
+
+    letter-spacing: -.035em;
+}
+
+p {
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+/* поле */
+
+input {
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 17px 18px;
+
+    border-radius: 16px;
+
+    border: 1px solid var(--line);
+
+    outline: none;
+
+    background: rgba(255,255,255,.05);
+
+    color: var(--text);
+
+    font-size: 16px;
+
+    transition: .25s;
+}
+
+input:focus {
+    border-color: rgba(255,105,173,.65);
+
+    box-shadow:
+        0 0 0 4px rgba(255,105,173,.08);
+}
+
+/* кнопки */
+
+.primary {
+    width: 100%;
+
+    margin-top: 13px;
+
+    padding: 17px;
+
+    border: none;
+
+    border-radius: 17px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--pink),
+            var(--purple)
+        );
+
+    font-size: 15px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 15px 35px rgba(136,119,255,.25);
+
+    transition: .25s;
+}
+
+.primary:hover {
+    transform: translateY(-3px);
+
+    filter: brightness(1.08);
+}
+
+.primary:active {
+    transform: translateY(0);
+}
+
+/* прогресс */
+
+.question-meta {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: var(--soft);
+
+    font-size: 13px;
+
+    margin-bottom: 9px;
+}
+
+.progress {
+    height: 5px;
+
+    background: rgba(255,255,255,.07);
+
+    border-radius: 100px;
+
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+
+    width: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--pink),
+            var(--purple),
+            var(--blue)
+        );
+
+    border-radius: inherit;
+
+    transition: width .55s ease;
+}
+
+/* варианты */
+
+.option {
+    width: 100%;
+
+    display: block;
+
+    text-align: left;
+
+    padding: 17px;
+
+    margin: 10px 0;
+
+    border-radius: 17px;
+
+    border: 1px solid var(--line);
+
+    background: rgba(255,255,255,.045);
+
+    color: var(--text);
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: .22s;
+}
+
+.option:hover {
+    transform: translateX(5px);
+
+    border-color: rgba(255,105,173,.5);
+
+    background: rgba(255,255,255,.08);
+}
+
+.option.correct {
+    background: rgba(105,224,174,.14);
+
+    border-color: rgba(105,224,174,.6);
+}
+
+.option.wrong {
+    background: rgba(255,105,140,.10);
+
+    border-color: rgba(255,105,140,.45);
+
+    animation: wrong .3s;
+}
+
+@keyframes wrong {
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-3px); }
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+/* подсказка */
+
+.hint {
+    margin-top: 18px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    color: var(--soft);
+}
+
+/* финал */
+
+.result {
+    text-align: center;
+}
+
+.result-icon {
+    font-size: 65px;
+
+    margin-bottom: 10px;
+
+    animation:
+        floatIcon 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes floatIcon {
+    to {
+        transform:
+            translateY(-10px)
+            rotate(4deg)
+            scale(1.06);
+    }
+}
+
+.reward {
+    margin-top: 25px;
+
+    padding: 25px;
+
+    border-radius: 24px;
+
+    border: 1px solid var(--line);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,105,173,.12),
+            rgba(136,119,255,.12)
+        );
+}
+
+.reward-title {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.telegram {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 12px;
+
+    padding: 13px 18px;
+
+    border-radius: 14px;
+
+    color: white;
+
+    text-decoration: none;
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid var(--line);
+
+    transition: .25s;
+}
+
+.telegram:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255,255,255,.13);
+}
+
+/* повтор */
+
+.replay {
+    width: 100%;
+
+    margin-top: 12px;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    border: 1px solid var(--line);
+
+    background: rgba(255,255,255,.05);
+
+    color: var(--text);
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.replay:hover {
+    background: rgba(255,255,255,.09);
+}
+
+/* плавающие стикеры */
+
+.sticker {
+    position: fixed;
+
+    z-index: 100;
+
+    pointer-events: none;
+
+    font-size: 27px;
+
+    animation:
+        stickerFloat 3s ease-out forwards;
+}
+
+@keyframes stickerFloat {
+    0% {
+        opacity: 0;
+        transform:
+            translateY(30px)
+            scale(.5)
+            rotate(-15deg);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translateY(-230px)
+            scale(1.25)
+            rotate(20deg);
+    }
+}
+
+/* конфетти */
+
+.confetti {
+    position: fixed;
+
+    z-index: 200;
+
+    top: -30px;
+
+    width: 8px;
+    height: 14px;
+
+    pointer-events: none;
+
+    animation:
+        confettiFall 3.2s linear forwards;
+}
+
+@keyframes confettiFall {
+    to {
+        transform:
+            translate3d(var(--move), 110vh, 0)
+            rotate(720deg);
+
+        opacity: 0;
+    }
+}
+
+/* нижняя подпись */
+
+.footer {
+    margin-top: 20px;
+
+    text-align: center;
+
+    color: var(--soft);
+
+    font-size: 11px;
+}
+
+/* мобильная версия */
+
+@media (max-width: 520px) {
+
+    .card {
+        padding: 25px;
+
+        border-radius: 25px;
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- декоративные свечения -->
+
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="orb three"></div>
+
+<!-- переключатель темы -->
+
+<div class="topbar">
+    <button
+        class="theme-button"
+        id="themeButton"
+        onclick="toggleTheme()"
+        aria-label="Сменить тему"
+    >
+        ☾
+    </button>
+</div>
+
+<div class="wrapper">
+
+<main class="card">
+
+<!-- ================= START ================= -->
+
+<section id="start" class="screen active">
+
+    <span class="badge">
+        маленькая загадка
+    </span>
+
+    <h1>
+        Кто я?
+    </h1>
+
+    <p>
+        Ты говорила, что хочешь узнать, кто я.
+        Поэтому я решил оставить тебе несколько вопросов.
+        Здесь нет случайных ответов.
+        Где-то среди них спрятана маленькая подсказка. 👀
+    </p>
+
+    <p>
+        Только не торопись.
+        Иногда самые очевидные вещи оказываются не такими очевидными.
+    </p>
+
+    <input
+        id="nickname"
+        maxlength="30"
+        placeholder="Введи свой ник"
+    >
+
+    <button
+        class="primary"
+        onclick="startQuiz()"
+    >
+        Начать тест →
+    </button>
+
+    <div class="footer">
+        6 вопросов · маленькая загадка · финал впереди
+    </div>
+
+</section>
+
+
+<!-- ================= QUIZ ================= -->
+
+<section id="quiz" class="screen">
+
+    <div class="question-meta">
+
+        <span id="counter">
+            Вопрос 1 из 6
+        </span>
+
+        <span id="score">
+            0 правильных
+        </span>
+
+    </div>
+
+    <div class="progress">
+        <div
+            class="progress-bar"
+            id="progress"
+        ></div>
+    </div>
+
+    <h2 id="question">
+        Вопрос
+    </h2>
+
+    <div id="options"></div>
+
+    <div class="hint">
+        Не переживай из-за ошибки. Просто продолжай.
+    </div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section id="result" class="screen result">
+
+    <div
+        class="result-icon"
+        id="resultIcon"
+    >
+        ✦
+    </div>
+
+    <span class="badge">
+        финал
+    </span>
+
+    <h1 id="resultTitle">
+        Результат
+    </h1>
+
+    <p id="resultText">
+        Здесь появится результат.
+    </p>
+
+    <div
+        class="reward"
+        id="reward"
+    ></div>
+
+    <button
+        class="replay"
+        onclick="location.reload()"
+    >
+        Пройти ещё раз
+    </button>
+
+</section>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   ВОПРОСЫ
+   ===================================================== */
+
+const questions = [
+
+    {
+        question: "Роналдо или Месси?",
+
+        answers: [
+            "Роналдо",
+            "Месси",
+            "Неймар",
+            "Мбаппе"
+        ],
+
+        correct: 0
+    },
+
+    {
+        question: "У меня Samsung или iPhone?",
+
+        answers: [
+            "iPhone",
+            "Samsung",
+            "Xiaomi",
+            "Google Pixel"
+        ],
+
+        correct: 1
+    },
+
+    {
+        question: "Какой у меня юз в TikTok?",
+
+        answers: [
+            "@nechdanchik",
+            "tt_nechdanchik_rfz",
+            "@tt_rf_602",
+            "tt_danchik"
+        ],
+
+        correct: 1
+    },
+
+    {
+        question: "Сколько у меня подписчиков?",
+
+        answers: [
+            "502",
+            "602",
+            "702",
+            "802"
+        ],
+
+        correct: 1
+    },
+
+    {
+        question: "Слушаю ли я песни Тима Белорусских?",
+
+        answers: [
+            "Да",
+            "Нет",
+            "Иногда, но редко",
+            "Только старые"
+        ],
+
+        correct: 0
+    },
+
+    {
+        question: "Слушает ли Акбарова песни Тима Белорусских?",
+
+        answers: [
+            "Да",
+            "Нет",
+            "Только пару песен",
+            "Не знаю"
+        ],
+
+        correct: 0
+    }
+
+];
+
+
+/* =====================================================
+   ПЕРЕМЕННЫЕ
+   ===================================================== */
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let nickname = "";
+
+let locked = false;
+
+
+/* =====================================================
+   СМЕНА ТЕМЫ
+   ===================================================== */
+
+function toggleTheme() {
+
+    document.body.classList.toggle("light");
+
+    const button =
+        document.getElementById("themeButton");
+
+    if (
+        document.body.classList.contains("light")
+    ) {
+
+        button.textContent = "☀";
+
+    } else {
+
+        button.textContent = "☾";
+
+    }
+
+}
+
+
+/* =====================================================
+   СТАРТ
+   ===================================================== */
+
+function startQuiz() {
+
+    const input =
+        document.getElementById("nickname");
+
+    nickname =
+        input.value.trim();
+
+    if (!nickname) {
+
+        input.focus();
+
+        input.animate(
+            [
+                { transform: "translateX(0)" },
+                { transform: "translateX(-6px)" },
+                { transform: "translateX(6px)" },
+                { transform: "translateX(0)" }
+            ],
+            {
+                duration: 350
+            }
+        );
+
+        return;
+    }
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    showScreen("quiz");
+
+    renderQuestion();
+
+}
+
+
+/* =====================================================
+   ПОКАЗ ЭКРАНА
+   ===================================================== */
+
+function showScreen(id) {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+
+            screen.classList.remove("active");
+
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+}
+
+
+/* =====================================================
+   ОТРИСОВКА ВОПРОСА
+   ===================================================== */
+
+function renderQuestion() {
+
+    locked = false;
+
+    const q =
+        questions[currentQuestion];
+
+    document
+        .getElementById("counter")
+        .textContent =
+        `Вопрос ${currentQuestion + 1} из ${questions.length}`;
+
+    document
+        .getElementById("score")
+        .textContent =
+        `${score} правильных`;
+
+    document
+        .getElementById("progress")
+        .style.width =
+        `${(currentQuestion / questions.length) * 100}%`;
+
+    document
+        .getElementById("question")
+        .textContent =
+        q.question;
+
+
+    const options =
+        document.getElementById("options");
+
+    options.innerHTML = "";
+
+
+    q.answers.forEach(
+        (answer, index) => {
+
+            const button =
+                document.createElement("button");
+
+            button.className = "option";
+
+            button.textContent = answer;
+
+            button.onclick = () =>
+                chooseAnswer(index, button);
+
+            options.appendChild(button);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ВЫБОР ОТВЕТА
+   ===================================================== */
+
+function chooseAnswer(index, button) {
+
+    if (locked) {
+        return;
+    }
+
+    locked = true;
+
+    const q =
+        questions[currentQuestion];
+
+    const buttons =
+        document.querySelectorAll(".option");
+
+
+    buttons.forEach(
+        b => b.disabled = true
+    );
+
+
+    if (index === q.correct) {
+
+        score++;
+
+        button.classList.add("correct");
+
+        createSmallStickers();
+
+    } else {
+
+        /*
+        Специально НЕ пишем:
+        "неправильно".
+
+        Она просто увидит выбранный вариант
+        и через небольшую анимацию перейдёт дальше.
+        */
+
+        button.classList.add("wrong");
+
+    }
+
+
+    document
+        .getElementById("score")
+        .textContent =
+        `${score} правильных`;
+
+
+    setTimeout(
+        () => {
+
+            currentQuestion++;
+
+            if (
+                currentQuestion <
+                questions.length
+            ) {
+
+                renderQuestion();
+
+            } else {
+
+                finishQuiz();
+
+            }
+
+        },
+        650
+    );
+
+}
+
+
+/* =====================================================
+   ФИНАЛ
+   ===================================================== */
+
+function finishQuiz() {
+
+    document
+        .getElementById("progress")
+        .style.width = "100%";
+
+
+    showScreen("result");
+
+
+    const title =
+        document.getElementById("resultTitle");
+
+    const text =
+        document.getElementById("resultText");
+
+    const reward =
+        document.getElementById("reward");
+
+    const icon =
+        document.getElementById("resultIcon");
+
+
+    /*
+       6 / 6
+    */
+
+    if (score === 6) {
+
+        icon.textContent = "💗";
+
+        title.textContent =
+            `Молодец, ${nickname}!`;
+
+        text.textContent =
+            "6 из 6. Ты ответила на всё правильно. Значит, загадка действительно была разгадана.";
+
+        reward.innerHTML = `
+
+            <div class="reward-title">
+                🎁 Твоя награда
+            </div>
+
+            <p>
+                Ты дошла до самого конца.
+                Теперь осталась только одна маленькая
+                деталь.
+                Если хочешь узнать, кто всё это устроил,
+                напиши мне.
+            </p>
+
+            <a
+                class="telegram"
+                href="https://t.me/neshdanchik_1"
+                target="_blank"
+                rel="noopener"
+            >
+                💌 @neshdanchik_1 ↗
+            </a>
+
+            <p style="font-size:12px;margin-top:18px">
+                Дальше продолжим уже в Telegram.
+            </p>
+
+        `;
+
+        createConfetti();
+
+        createManyStickers();
+
+    }
+
+
+    /*
+       5 / 6
+    */
+
+    else if (score === 5) {
+
+        icon.textContent = "🥹";
+
+        title.textContent =
+            "Почти идеально!";
+
+        text.textContent =
+            `${nickname}, ты набрала 5 из 6.`;
+
+        reward.innerHTML = `
+
+            <div class="reward-title">
+                🌸 Ты была совсем близко
+            </div>
+
+            <p>
+                Всего одна ошибка.
+                Одна-единственная.
+                Загадка почти раскрыта.
+            </p>
+
+            <p>
+                Иногда последний шаг самый сложный.
+            </p>
+
+        `;
+
+        createManyStickers();
+
+    }
+
+
+    /*
+       3 - 4
+    */
+
+    else if (score >= 3) {
+
+        icon.textContent = "👀";
+
+        title.textContent =
+            `${score} из 6`;
+
+        text.textContent =
+            "Ты уже кое-что знаешь. Но до полной разгадки ещё немного.";
+
+        reward.innerHTML = `
+
+            <div class="reward-title">
+                👀 Уже интересно
+            </div>
+
+            <p>
+                Некоторые подсказки ты поймала.
+                Некоторые прошли мимо.
+                Попробуй ещё раз.
+            </p>
+
+        `;
+
+        createManyStickers();
+
+    }
+
+
+    /*
+       0 - 2
+    */
+
+    else {
+
+        icon.textContent = "🌙";
+
+        title.textContent =
+            `${score} из 6`;
+
+        text.textContent =
+            "Похоже, загадка пока не хочет раскрываться.";
+
+        reward.innerHTML = `
+
+            <div class="reward-title">
+                🌙 Пока слишком рано
+            </div>
+
+            <p>
+                Но это не конец.
+                Возможно, со второй попытки
+                всё станет гораздо понятнее.
+            </p>
+
+        `;
+
+        createManyStickers();
+
+    }
+
+}
+
+
+/* =====================================================
+   СТИКЕРЫ
+   ===================================================== */
+
+function createSmallStickers() {
+
+    const stickers = [
+        "✨",
+        "♡",
+        "✦"
+    ];
+
+    for (
+        let i = 0;
+        i < 3;
+        i++
+    ) {
+
+        createSticker(
+            stickers[
+                Math.floor(
+                    Math.random() *
+                    stickers.length
+                )
+            ]
+        );
+
+    }
+
+}
+
+
+function createManyStickers() {
+
+    const stickers = [
+        "💗",
+        "✨",
+        "🎀",
+        "🌸",
+        "💫",
+        "♡",
+        "✦",
+        "🌙",
+        "👀"
+    ];
+
+    for (
+        let i = 0;
+        i < 15;
+        i++
+    ) {
+
+        setTimeout(
+            () => {
+
+                createSticker(
+                    stickers[
+                        Math.floor(
+                            Math.random() *
+                            stickers.length
+                        )
+                    ]
+                );
+
+            },
+            i * 100
+        );
+
+    }
+
+}
+
+
+function createSticker(symbol) {
+
+    const sticker =
+        document.createElement("div");
+
+    sticker.className = "sticker";
+
+    sticker.textContent = symbol;
+
+    sticker.style.left =
+        (5 + Math.random() * 90) + "%";
+
+    sticker.style.top =
+        (55 + Math.random() * 35) + "%";
+
+    sticker.style.animationDelay =
+        (Math.random() * .4) + "s";
+
+    document.body.appendChild(sticker);
+
+
+    setTimeout(
+        () => sticker.remove(),
+        3300
+    );
+
+}
+
+
+/* =====================================================
+   КОНФЕТТИ
+   ===================================================== */
+
+function createConfetti() {
+
+    const symbols = [
+        "✦",
+        "♥",
+        "◆",
+        "●",
+        "✧"
+    ];
+
+    for (
+        let i = 0;
+        i < 100;
+        i++
+    ) {
+
+        const piece =
+            document.createElement("div");
+
+        piece.className =
+            "confetti";
+
+        piece.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
+
+        piece.style.left =
+            Math.random() * 100 + "vw";
+
+        piece.style.color =
+            [
+                "#ff69ad",
+                "#8877ff",
+                "#69b7ff",
+                "#69e0ae",
+                "#ffffff"
+            ][
+                Math.floor(
+                    Math.random() * 5
+                )
+            ];
+
+        piece.style.setProperty(
+            "--move",
+            (Math.random() * 300 - 150) + "px"
+        );
+
+        piece.style.animationDelay =
+            Math.random() * .8 + "s";
+
+        document.body.appendChild(piece);
+
+
+        setTimeout(
+            () => piece.remove(),
+            3600
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+  </html>
